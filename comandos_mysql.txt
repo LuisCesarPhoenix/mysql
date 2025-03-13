@@ -510,6 +510,41 @@ mysql> SELECT RIGHT(name,4) as nome From teste.users;
 +------+
 
 
+
+23-Listar todos os usuários do banco de dados:
+a)No Windows:
+mysql> SELECT User FROM mysql.user WHERE Host = 'localhost';
++------------------+
+| User             |
++------------------+
+| mysql.infoschema |
+| mysql.session    |
+| mysql.sys        |
+| root             |
++------------------+
+
+b)No Linux:
+mysql> SELECT User FROM mysql.user WHERE Host = 'localhost';
++------------------+
+| User             |
++------------------+
+| mysql.infoschema |
+| mysql.session    |
+| mysql.sys        |
+| papaismurf       |
+| root             |
++------------------+
+
+
+23 Cria usuário e senha, garantir todos os privilégios e atualizar os privilégios no Linux:
+a)CREATE USER 'papaismurf'@'localhost' IDENTIFIED WITH caching_sha2_password BY 'bocetadoce';
+b.1)GRANT ALL PRIVILEGES ON owncloud.* TO 'ownclouduser'@'localhost';
+b.2)GRANT SELECT, INSERT, UPDATE, DELETE, CREATE, INDEX, DROP, ALTER, CREATE TEMPORARY TABLES, LOCK TABLES ON owncloud.* TO 
+'papaismurf'@'localhost';
+c)FLUSH PRIVILEGES;
+
+
+
 30 - Conectar ao MySQL Shell:
 
 Para conectar ao MySQL Shell manualmente, você pode usar o seguinte comando no terminal (cmd, PowerShell ou bash):
