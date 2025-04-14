@@ -536,12 +536,137 @@ mysql> SELECT User FROM mysql.user WHERE Host = 'localhost';
 +------------------+
 
 
-23 Cria usuário e senha, garantir todos os privilégios e atualizar os privilégios no Linux:
+
+24-Cria usuário e senha, garantir todos os privilégios e atualizar os privilégios no Linux:
 a)CREATE USER 'papaismurf'@'localhost' IDENTIFIED WITH caching_sha2_password BY 'bocetadoce';
 b.1)GRANT ALL PRIVILEGES ON owncloud.* TO 'ownclouduser'@'localhost';
 b.2)GRANT SELECT, INSERT, UPDATE, DELETE, CREATE, INDEX, DROP, ALTER, CREATE TEMPORARY TABLES, LOCK TABLES ON owncloud.* TO 
 'papaismurf'@'localhost';
 c)FLUSH PRIVILEGES;
+
+
+
+25-Essa consulta SQL é usada para buscar telefones celulares de pessoas físicas com base na localização (estado e cidade) e em 
+características específicas dos telefones. :
+
+SELECT DISTINCT
+(CONCAT(HT.DDD, HT.TELEFONE)) as TELEFONE,
+HE.CIDADE
+from contatos C
+left join HISTORICO_TELEFONES ht on ht.CONTATOS_ID = c.CONTATOS_ID
+left join HISTORICO_ENDERECOS he on he.CONTATOS_ID = c.CONTATOS_ID
+where
+HE.UF = 'SAO PAULO' AND
+(HT.TIPO_TELEFONE = 3 OR HT.TIPO_TELEFONE = 4) AND
+HE.PRIORIDADE IN (1,2,3) AND
+LATITUDE IS NOT NULL AND
+LONGITUDE IS NOT NULL
+
+a)-Objetivo Geral da Consulta
+
+Buscar números de telefone celular (DDD + número) de pessoas físicas residentes no estado de São Paulo, junto com a cidade de cada 
+uma, com base nos dados das tabelas:
+i)CONTATOS — Dados principais da pessoa.
+ii)HISTORICO_TELEFONES — Histórico de telefones da pessoa.
+iii)HISTORICO_ENDERECOS — Histórico de endereços da pessoa.
+
+b)-Estrutura da Consulta:
+
+SELECT DISTINCT
+(CONCAT(HT.DDD, HT.TELEFONE)) as TELEFONE,
+HE.CIDADE
+
+i)Retorna o número de telefone completo (DDD + número), sem formatação, e a cidade onde a pessoa mora.
+ii)Usa DISTINCT para evitar duplicatas (mesmo número/cidade repetidos).
+
+c)Junções entre tabelas:
+
+from contatos C
+left join HISTORICO_TELEFONES ht on ht.CONTATOS_ID = c.CONTATOS_ID
+left join HISTORICO_ENDERECOS he on he.CONTATOS_ID = c.CONTATOS_ID
+
+i)Faz LEFT JOIN nas tabelas de histórico com base no CONTATOS_ID, ou seja, associa os telefones e endereços de cada contato.
+ii)LEFT JOIN é usado para garantir que mesmo que algum dado esteja ausente (por exemplo, sem endereço), o contato ainda pode aparecer 
+na lista (mas os filtros vão acabar removendo esses).
+
+d) Filtros da Consulta:
+
+where
+HE.UF = 'SAO PAULO' AND
+(HT.TIPO_TELEFONE = 3 OR HT.TIPO_TELEFONE = 4) AND
+HE.PRIORIDADE IN (1,2,3) AND
+LATITUDE IS NOT NULL AND
+LONGITUDE IS NOT NULL
+
+Esses filtros refinam a busca:
+
+Filtros e Significados:
+i)HE.UF = 'SAO PAULO'	Apenas endereços que estejam no estado de São Paulo
+ii)HT.TIPO_TELEFONE IN (3, 4)	Apenas tipos de telefone específicos (provavelmente celulares pessoais)
+iii)HE.PRIORIDADE IN (1,2,3)	Endereços com prioridade alta (os mais confiáveis ou recentes, geralmente)
+iv)LATITUDE/LONGITUDE NOT NULL	Garante que o endereço tem geolocalização — útil para buscas geográficas
+
+Resumo Final
+
+Essa consulta busca telefones celulares de pessoas físicas que:
+a)Têm endereços localizados em São Paulo.
+b)Possuem endereços confiáveis (prioridade 1, 2 ou 3) com geolocalização (latitude e longitude).
+c)Têm telefones do tipo 3 ou 4, que geralmente representam celulares.
+d)Retorna o número de telefone completo (DDD + número) e a cidade da pessoa.
+
+
+
+26)Essa segunda consulta é voltada para pessoa jurídica (empresas):
+
+SELECT DISTINCT
+CONCAT(HT.DDD, HT.TELEFONE) AS TELEFONE,
+EM.CNPJ,
+EM.RAZAO_SOCIAL
+FROM EMPRESAS EM
+LEFT JOIN EMPRESAS_HISTORICO_TELEFONES HT ON HT.EMPRESAS_ID = EM.EMPRESAS_ID
+WHERE
+HT.TIPO_TELEFONE = 8
+
+Objetivo da Consulta:
+
+Retornar números de telefone de empresas, junto com CNPJ e razão social, filtrando apenas os telefones do tipo 8 (que provavelmente 
+representa telefone comercial principal, por exemplo).
+
+Explicação Linha por Linha
+
+a)SELECT DISTINCT
+CONCAT(HT.DDD, HT.TELEFONE) AS TELEFONE,
+EM.CNPJ,
+EM.RAZAO_SOCIAL
+
+Retorna:
+
+i)TELEFONE: número da empresa (DDD + número).
+ii)CNPJ: o CNPJ da empresa.
+iii)RAZAO_SOCIAL: nome oficial da empresa.
+iv)DISTINCT: remove duplicatas (evita que a mesma empresa e telefone apareçam mais de uma vez).
+
+b)FROM EMPRESAS EM
+LEFT JOIN EMPRESAS_HISTORICO_TELEFONES HT ON HT.EMPRESAS_ID = EM.EMPRESAS_ID
+
+i)Junta a tabela EMPRESAS com EMPRESAS_HISTORICO_TELEFONES usando LEFT JOIN com base no ID da empresa.
+ii)Isso conecta os dados principais da empresa com os telefones que ela já teve.
+
+c)WHERE
+HT.TIPO_TELEFONE = 8
+Filtra apenas os telefones do tipo 8, que normalmente representa telefone fixo comercial principal ou um tipo específico relevante 
+(o significado exato depende do sistema que define os tipos).
+
+Resumo Final
+
+Essa consulta retorna Dado, Fonte e Significado:
+a)TELEFONE -> EMPRESAS_HISTORICO_TELEFONES -> Número da empresa com DDD, apenas se for do tipo 8
+b)CNPJ -> EMPRESAS -> Cadastro Nacional da Pessoa Jurídica
+c)RAZAO_SOCIAL -> EMPRESAS -> Nome oficial da empresa
+
+
+
+27)
 
 
 
