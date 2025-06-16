@@ -1,13 +1,13 @@
 1-Criar banco de dados se não existir:
 mysql> CREATE DATABASE IF NOT EXISTS teste;
 
-
+***********************************************************************
 
 2-trocar para o banco de dados teste:
 mysql> use teste;
 Database changed
 
-
+***********************************************************************
 
 3-Criar tabela no banco de dados teste:
 mysql> CREATE TABLE teste.users( // Pode ser assim
@@ -20,7 +20,7 @@ mysql> password varchar(20) not null,
 mysql> primary key(id)
 mysql> );
 
-
+***********************************************************************
 
 4-Mostrar a estrutura da tabela:
 mysql> describe users;
@@ -36,7 +36,7 @@ mysql> describe teste.users;
 | created_at | timestamp    | YES  |     | CURRENT_TIMESTAMP | DEFAULT_GENERATED |
 +------------+--------------+------+-----+-------------------+-------------------+
 
-
+***********************************************************************
 
 5-Mostrar todos os bancos de dados:
 mysql> show databases;
@@ -53,7 +53,7 @@ mysql> show databases;
 | world              |
 +--------------------+
 
-
+***********************************************************************
 
 6-Mostrar todos os dados da tabela:
 mysql> select * from users;
@@ -115,7 +115,7 @@ mysql> select id, name nome, username 'nome de usuário', email, telefone, creat
 | 34 | Alexandre Pirez         | alexandrepirez     | alexandrepirez@email.com | 11956233265 | 2025-02-28 17:47:29 |
 +----+-------------------------+--------------------+--------------------------+-------------+---------------------+
 
-
+***********************************************************************
 
 7-Inserir dados na tabela users:
 mysql> INSERT INTO teste.users(name, username, email, password)
@@ -154,7 +154,7 @@ mysql> select * from teste.users;
 | 27 | Paula Gludovatz | paulagludovatz | paulagludovatz@email.com | 11957892773 | gludovatz741                                                 | 2025-02-17 15:11:40 |
 +----+-----------------+----------------+--------------------------+-------------+--------------------------------------------------------------+---------------------+
 
-
+***********************************************************************
 
 8-Deletar dados da tabela users:
 mysql> delete from teste.users where id = 25;
@@ -169,7 +169,7 @@ mysql> select * from users;
 | 23 | Ana Paula   | anapaula   | anapaula@email.com   | $2b$10$JYtxcxXvPIKekkza13RG9Ozy2JCZA/sST2RFJiXhllrHqF7MMv2p2 | 2025-02-03 17:06:32 |
 +----+-------------+------------+----------------------+--------------------------------------------------------------+---------------------+
 
-
+***********************************************************************
 
 9-Atualizar dados da tabela:
 mysql> UPDATE teste.users SET name = "Henrique Totti" , username = "henriquetotti" , email = "henriquetotti@email.com" WHERE id = 21;
@@ -200,12 +200,12 @@ mysql> select * from users;
 | 23 | Ana Paula      | anapaula      | anapaula@email.com      | NULL        | $2b$10$JYtxcxXvPIKekkza13RG9Ozy2JCZA/sST2RFJiXhllrHqF7MMv2p2 | 2025-02-03 17:06:32 |
 +----+----------------+---------------+-------------------------+-------------+--------------------------------------------------------------+---------------------+
 
-
+***********************************************************************
 
 10-	limpar o terminal:
 mysql> \! cls
 
-
+***********************************************************************
 
 11-A cláusula ORDER BY retorna os dados em ordem ascendente(ASC) ou descendente(DESC):
 mysql> SELECT * FROM teste.users ORDER BY name desc;
@@ -218,7 +218,7 @@ mysql> SELECT * FROM users ORDER BY name asc;
 | 22 | Paulo Cesar    | paulocesar    | paulocesar@email.com    | $2b$10$KA8jd8AAfDMEwxb971yKve/JzuJT2qx90CSqeC0N8.nl18uBFuzgC | 2025-02-03 16:57:24 |
 +----+----------------+---------------+-------------------------+--------------------------------------------------------------+---------------------+
 
-
+***********************************************************************
 
 12-Alterar campos e tipos de dados da tabela users:
 
@@ -276,7 +276,7 @@ mysql> describe users;
 | created_at | timestamp    | YES  |     | CURRENT_TIMESTAMP | DEFAULT_GENERATED |
 +------------+--------------+------+-----+-------------------+-------------------+
 
-
+***********************************************************************
 
 13-Apagar banco de dados:
 mysql> DROP DATABASE teste2;
@@ -294,7 +294,7 @@ mysql> show databases;
 | world              |
 +--------------------+
 
-
+***********************************************************************
 
 14-Mostrar tabelas no banco de dados:
 mysql> use teste;
@@ -306,7 +306,7 @@ mysql> show tables;
 | users           |
 +-----------------+
 
-
+***********************************************************************
 
 15-Apagar tabela do banco de dados teste;
 mysql> show tables;
@@ -324,7 +324,7 @@ mysql> show tables;
 | users           |
 +-----------------+
 
-
+***********************************************************************
 
 16-Para deletar algum registro usamos a instrução SQL DELETE. Diferente do DROP, ele deleta os registros das colunas do banco de 
 dados.
@@ -355,7 +355,7 @@ mysql> select * from users;
 mysql> DELETE FROM users;
 mysql> commit;
 
-
+***********************************************************************
 
 17-A cláusula DISTINCT retorna apenas uma linha de dados para todo o grupo de linhas que tenha o mesmo valor. Ela só retorna as 
 linhas com valores distintos.
@@ -371,7 +371,7 @@ mysql> SELECT DISTINCT name FROM teste.users;
 | Henrique Martinz        |
 +-------------------------+
 
-
+***********************************************************************
 
 18-A cláusula ALL é o oposto de DISTINCT, pois retorna todos os dados, mesmo que tenha valores iguais:
 mysql> SELECT ALL name FROM teste.users;
@@ -386,7 +386,7 @@ mysql> SELECT ALL name FROM teste.users;
 | Henrique Martinz        |
 +-------------------------+
 
-
+***********************************************************************
 
 19-A cláusula LIMIT [início, linhas] retorna o número de linhas especificado. Se o valor início for fornecido, aquelas linhas são 
 puladas antes do dado ser retornado. Lembre-se que a primeira linha é 0.
@@ -430,7 +430,7 @@ mysql> select id, name nome, username 'nome de usuário', email, telefone, creat
 | 34 | Alexandre Pirez | alexandrepirez  | alexandrepirez@email.com | 11956233265 | 2025-02-28 17:47:29 |
 +----+-----------------+-----------------+--------------------------+-------------+---------------------+
 
-
+***********************************************************************
 
 20-Para incrementar as consultas podemos usar algumas funções:
 a)A função ABS retorna o valor absoluto do número, ou seja, só considera a parte numérica, não se importando com o sinal de positivo 
@@ -479,7 +479,7 @@ mysql> SELECT name as nome From teste.users Where name like "%z";
 | Henrique Martinz |
 +------------------+
 
-
+***********************************************************************
 
 21-Outra função importante para retorno de consultas é o Left, que retorna os primeiros caracteres à esquerda de uma string. 
 A consulta a seguir retornará os três primeiros caracteres à esquerda dos registros da coluna name:
@@ -494,7 +494,7 @@ mysql> SELECT LEFT(name,3) as nome from teste.users;
 | Hen  |
 +------+
 
-
+***********************************************************************
 
 22-A função Right é semelhante a função Left, mas esta retorna os últimos caracteres à direita de uma string.
 A consulta a seguir retorna os quatro últimos caracteres à direita dos nomes da tabela users:
@@ -509,7 +509,7 @@ mysql> SELECT RIGHT(name,4) as nome From teste.users;
 | tinz |
 +------+
 
-
+***********************************************************************
 
 23-Listar todos os usuários do banco de dados:
 a)No Windows:
@@ -535,7 +535,7 @@ mysql> SELECT User FROM mysql.user WHERE Host = 'localhost';
 | root             |
 +------------------+
 
-
+***********************************************************************
 
 24-Cria usuário e senha, garantir todos os privilégios e atualizar os privilégios no Linux:
 a)CREATE USER 'papaismurf'@'localhost' IDENTIFIED WITH caching_sha2_password BY 'bocetadoce';
@@ -544,7 +544,7 @@ b.2)GRANT SELECT, INSERT, UPDATE, DELETE, CREATE, INDEX, DROP, ALTER, CREATE TEM
 'papaismurf'@'localhost';
 c)FLUSH PRIVILEGES;
 
-
+***********************************************************************
 
 25-Essa consulta SQL é usada para buscar telefones celulares de pessoas físicas com base na localização (estado e cidade) e em 
 características específicas dos telefones. :
@@ -614,7 +614,7 @@ b)Possuem endereços confiáveis (prioridade 1, 2 ou 3) com geolocalização (la
 c)Têm telefones do tipo 3 ou 4, que geralmente representam celulares.
 d)Retorna o número de telefone completo (DDD + número) e a cidade da pessoa.
 
-
+***********************************************************************
 
 26)Essa segunda consulta é voltada para pessoa jurídica (empresas):
 
@@ -664,11 +664,11 @@ a)TELEFONE -> EMPRESAS_HISTORICO_TELEFONES -> Número da empresa com DDD, apenas
 b)CNPJ -> EMPRESAS -> Cadastro Nacional da Pessoa Jurídica
 c)RAZAO_SOCIAL -> EMPRESAS -> Nome oficial da empresa
 
-
+***********************************************************************
 
 27)
 
-
+***********************************************************************
 
 30 - Conectar ao MySQL Shell:
 
@@ -690,6 +690,7 @@ mysqlsh
 E depois conecte com:
 \connect root@localhost
 
+***********************************************************************
 
 31-A principal diferença entre implementar um CRUD com MySQL ou MongoDB está no modelo de dados e na forma como as consultas são 
 estruturadas. Aqui está um comparativo:
@@ -760,6 +761,7 @@ MongoDB é melhor para grandes volumes de dados não estruturados (logs, big dat
 Se seu sistema envolve muitas consultas e grandes volumes de dados, o MongoDB pode ser mais eficiente. Se precisa de integridade e 
 estrutura rígida, o MySQL é melhor.
 
+***********************************************************************
 
 32-Tipos de dados
 
